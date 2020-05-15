@@ -1,6 +1,5 @@
 package PackageCinema;
 
-import Enums.Tarif;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.Objects;
 public class Seance {
     public Film Film = new Film();
     public String jourHoraire="";
-    public ArrayList<Tarif> Achats = new ArrayList<Tarif>();
+    public ArrayList<Integer> Achats = new ArrayList<Integer>();
     public Salle Salle = new Salle();
 
 
@@ -22,8 +21,7 @@ public class Seance {
     }
 
     public int Recette() {
-        return Achats.stream().mapToInt(Tarif::getMontant)
-                .sum();
+        return Achats.stream().mapToInt(a->a).sum();
     }
 
     @Override

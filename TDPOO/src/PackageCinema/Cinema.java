@@ -2,7 +2,7 @@ package PackageCinema;
 
 import java.util.*;
 
-import Enums.Tarif;
+
 import Exceptions.PasDeSeanceException;
 import PackageCinema.Interfaces.ICinema;
 import PackageCinema.Interfaces.IGestCinema;
@@ -11,7 +11,6 @@ public final class Cinema implements ICinema, IGestCinema {
     public ArrayList<Film> Films = new ArrayList<Film>();
     public ArrayList<Salle> Salles = new ArrayList<Salle>();
     public ArrayList<Seance> Seances= new ArrayList<Seance>();
-    private ArrayList<List<Seance>> historique;
 
     public ArrayList<String> Listefilms() {
     ArrayList<String> retour = new ArrayList<String>();
@@ -30,13 +29,7 @@ public final class Cinema implements ICinema, IGestCinema {
         return retour;
     }
 
-    public Film ChoisirFIlm(String titre){
-        Optional<Film> film = Films.stream().filter(p -> p.Titre == titre).findFirst();
-        if (film.isPresent()) {
-            return film.get();
-        }
-        return null;
-    }
+
 
 
 
@@ -60,8 +53,7 @@ public final class Cinema implements ICinema, IGestCinema {
 
     @Override
     public void nouvelleSemaine() {
-        historique.add(Seances);
-        Seances = null;
+        Seances = new ArrayList<Seance>();
     }
 
     @Override
@@ -104,7 +96,15 @@ public final class Cinema implements ICinema, IGestCinema {
 
     @Override
     public boolean achetePlace(String titreFilm, String jourHoraire, int tarif) throws PasDeSeanceException {
-        // Seance seance = Seances.stream()
+        Optional<Seance> optseance= Seances.stream().filter(p->p.jourHoraire.equalsIgnoreCase(jourHoraire)).findFirst();
+        if(!optseance.isPresent())
+            throw new PasDeSeanceException();
+        Seance seance = optseance.get();
+        if(!seance.Film.Titre.equalsIgnoreCase(titreFilm))
+            throw  new PasDeSeanceException();
+        seance.Achats.add(tarif);
+
+
 
         // TODO Auto-generated method stub
         return false;
