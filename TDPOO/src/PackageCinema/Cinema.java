@@ -103,11 +103,8 @@ public final class Cinema implements ICinema, IGestCinema {
         if(!seance.Film.Titre.equalsIgnoreCase(titreFilm))
             throw  new PasDeSeanceException();
         seance.Achats.add(tarif);
+        return true;
 
-
-
-        // TODO Auto-generated method stub
-        return false;
     }
 
 }
